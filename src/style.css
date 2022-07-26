@@ -1,0 +1,21 @@
+body {
+  background-color: #fff;
+}
+
+.wrapper {
+  margin: 5px;
+  padding: 10px;
+  background-color: cyan;
+}
+
+input[type="text"] {
+  width: clamp(300px, 80%, 1200px);
+}
+
+#chat {
+  background-color: darkcyan;
+}
+
+.message {
+  background-color: lightcyan;
+}
