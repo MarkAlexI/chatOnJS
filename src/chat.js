@@ -6,11 +6,16 @@ ws.onclose = event => console.log(`Closed ${event.code}`);
 document.forms.sendmessage.onsubmit = function() {
     let messageOut = this.message.value;
     ws.send(messageOut);
-   // ws.close();
     return false;
   };
 
 ws.onmessage = function(event) {
   let messageIn = event.data;
-  console.log(messageIn);
+  displayMessage(messageIn);
 };
+
+function displayMessage(message) {
+  let messageDiv = document.createElement('div');
+  messageDiv.textContent = message;
+  document.getElementById('chat').prepend(messageDiv);
+}
