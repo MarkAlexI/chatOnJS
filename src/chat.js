@@ -22,6 +22,7 @@ ws.onmessage = function(event) {
 
 function displayMessage(message) {
   let messageDiv = document.createElement('div');
+  messageDiv.classList.add('incoming');
   messageDiv.textContent = message;
   document.getElementById('chat').prepend(messageDiv);
 }

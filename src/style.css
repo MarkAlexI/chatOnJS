@@ -13,9 +13,17 @@ input[type="text"] {
 }
 
 #chat {
-  background-color: darkcyan;
+  margin-top: 8px;
+  padding: 2px;
+  background-color: lawngreen;
 }
 
 .message {
+  background-color: lightcyan;
+}
+
+.incoming {
+  margin: 2px;
+  padding: 0px 2px;
   background-color: lightcyan;
 }
