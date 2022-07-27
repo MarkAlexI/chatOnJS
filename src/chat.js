@@ -11,7 +11,13 @@ document.forms.sendmessage.onsubmit = function() {
 
 ws.onmessage = function(event) {
   let messageIn = event.data;
-  displayMessage(messageIn);
+  let reader = new FileReader();
+  
+  reader.onload = function() {
+    displayMessage(reader.result);
+  }
+  
+  reader.readAsText(messageIn);
 };
 
 function displayMessage(message) {
