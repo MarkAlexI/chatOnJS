@@ -4,10 +4,13 @@ let ws = new WebSocket(url);
 ws.onclose = event => console.log(`Closed ${event.code}`);
 
 document.forms.sendmessage.onsubmit = function() {
-    let outMessage = this.message.value;
-    ws.send(outMessage);
-    ws.close();
+    let messageOut = this.message.value;
+    ws.send(messageOut);
+   // ws.close();
     return false;
   };
 
-console.log('Work!');
+ws.onmessage = function(event) {
+  let messageIn = event.data;
+  console.log(messageIn);
+};
