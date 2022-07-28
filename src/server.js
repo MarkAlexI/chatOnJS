@@ -16,6 +16,9 @@ http.createServer((req, res) => {
       fs.createReadStream('./src/style.css').pipe(res);
     } else if (req.url == '/chat.js') {
       fs.createReadStream('./src/chat.js').pipe(res);
+    } else {
+      res.statusCode = 404;
+      res.end('No path to follow');
     }
 }).listen(8080);
 
