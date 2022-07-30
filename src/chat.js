@@ -33,13 +33,13 @@ function displayMessage(message) {
   messageDiv.textContent = message.text;
   document.getElementById('chat').prepend(messageDiv);
   
-  let userId = document.createElement('p');
+  let userId = document.createElement('div');
   userId.classList.add('user');
   userId.textContent = message.id;
   document.getElementsByClassName('incoming')[0].prepend(userId);
   
-  let timePoint = document.createElement('p');
+  let timePoint = document.createElement('span');
   timePoint.classList.add('time');
-  timePoint.textContent = new Date(message.date).toTimeString().slice(0, 8);
-  document.getElementsByClassName('incoming')[0].prepend(timePoint);
+  timePoint.textContent = ' at ' + new Date(message.date).toTimeString().slice(0, 8);
+  document.getElementsByClassName('user')[0].append(timePoint);
 }

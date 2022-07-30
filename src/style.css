@@ -1,5 +1,6 @@
 body {
   background-color: #fff;
+  font-size: 16px;
 }
 
 .wrapper {
@@ -30,11 +31,11 @@ input[type="text"] {
 }
 
 .time {
-  font-size: 8px;
+  font-size: .75rem;
   color: blue;
 }
 
 .user {
-  font-size: 10px;
+  font-size: .9rem;
   color: red;
 }
