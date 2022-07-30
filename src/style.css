@@ -9,11 +9,16 @@ body {
   background-color: cyan;
 }
 
+.typing {
+  display: none
+}
+
 input[type="text"] {
   width: clamp(300px, 80%, 1200px);
 }
 
 #chat {
+  display: none;
   margin-top: 8px;
   padding: 2px;
   background-color: lawngreen;
