@@ -25,4 +25,10 @@ function displayMessage(message) {
   messageDiv.classList.add('incoming');
   messageDiv.textContent = message;
   document.getElementById('chat').prepend(messageDiv);
+  
+  let date = new Date();
+  let timePoint = document.createElement('p');
+  timePoint.classList.add('time');
+  timePoint.textContent = date.toTimeString().slice(0, 8);
+  document.getElementsByClassName('incoming')[0].prepend(timePoint);
 }

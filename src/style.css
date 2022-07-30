@@ -26,4 +26,10 @@ input[type="text"] {
   margin: 2px;
   padding: 0px 2px;
   background-color: lightcyan;
+  border: 1px solid darkgreen;
+}
+
+.time {
+  font-size: 8px;
+  color: blue;
 }
