@@ -1,6 +1,22 @@
+'use strict';
+
 let url = 'ws://localhost:8080/ws';
 let ws = new WebSocket(url);
-let id = 'user'.concat(~~(Math.random() * 1e6));
+let id = '';
+
+function autorize() {
+  let login = document.getElementById('login').value;
+
+  if (!login.length || /\W/.test(login)) {
+    document.getElementById('login').value = 'Wrong symbols. Try again.';
+    result;
+  }
+  
+  id = login;
+  document.getElementsByClassName('autorize')[0].style.display = 'none';
+  document.getElementsByClassName('typing')[0].style.display = 'block';
+  document.getElementById('chat').style.display = 'block';
+}
 
 ws.onclose = event => console.log(`Closed ${event.code}`);
 
