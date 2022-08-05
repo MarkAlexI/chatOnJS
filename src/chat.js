@@ -4,12 +4,17 @@ let url = 'ws://localhost:8080/ws';
 let ws = new WebSocket(url);
 let id = '';
 
+if (ws.readyState === 0) {
+  console.log('connecting');
+}
+
 function autorize() {
   let login = document.getElementById('login').value;
 
   if (!login.length || /\W/.test(login)) {
-    document.getElementById('login').value = 'Wrong symbols. Try again.';
-    result;
+    document.getElementById('login').value = '';
+    document.getElementById('login').placeholder = 'Wrong symbols. Try again.';
+    return;
   }
   
   id = login;
@@ -18,7 +23,11 @@ function autorize() {
   document.getElementById('chat').style.display = 'block';
 }
 
-ws.onclose = event => console.log(`Closed ${event.code}`);
+ws.onclose = event => {
+  console.log(`Closed ${event.code}`);
+  document.getElementsByClassName('wrapper')[0].style.display = 'none';
+  document.body.textContent = 'Server died...';
+};
 
 document.forms.sendmessage.onsubmit = function() {
     let messageOut = {
