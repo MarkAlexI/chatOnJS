@@ -17,6 +17,13 @@ function autorize() {
     return;
   }
   
+  ws.send(JSON.stringify({
+    type: "login",
+    id: login,
+    text: "",
+    date: Date.now(),
+  }));
+  
   id = login;
   document.getElementsByClassName('autorize')[0].style.display = 'none';
   document.getElementsByClassName('typing')[0].style.display = 'block';
@@ -31,6 +38,7 @@ ws.onclose = event => {
 
 document.forms.sendmessage.onsubmit = function() {
     let messageOut = {
+      type: "message",
       text: this.message.value,
       id: id,
       date: Date.now(),

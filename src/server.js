@@ -26,8 +26,14 @@ function onSocketConnect(ws) {
   visitors.add(ws);
 
   ws.on('message', function(message) {
-    for (let visitor of visitors) {
-      visitor.send(message);
+    let incomingMessage = JSON.parse(message);
+    if (incomingMessage.type === "login") {
+      console.log(message);
+    }
+    if (incomingMessage.type === "message") {
+      for (let visitor of visitors) {
+        visitor.send(message);
+      }
     }
   });
 
