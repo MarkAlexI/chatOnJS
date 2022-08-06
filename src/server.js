@@ -1,3 +1,5 @@
+//import { Blob } from 'buffer';
+
 const http = require('http');
 const fs = require('fs');
 const ws = new require('ws');
@@ -28,7 +30,13 @@ function onSocketConnect(ws) {
   ws.on('message', function(message) {
     let incomingMessage = JSON.parse(message);
     if (incomingMessage.type === "login") {
-      console.log(message);
+      let outMessage = Buffer.from(JSON.stringify({
+         type: "login",
+         text: "yes",
+         id: "server",
+         date: Date.now(),
+      }));
+      ws.send(outMessage);
     }
     if (incomingMessage.type === "message") {
       for (let visitor of visitors) {

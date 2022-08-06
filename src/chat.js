@@ -52,14 +52,20 @@ ws.onmessage = function(event) {
   let reader = new FileReader();
   
   reader.onload = function() {
-    displayMessage(reader.result);
+    let message = JSON.parse(reader.result);
+    
+    if (message.type === "login") {
+      console.log(message.text);
+    }
+    if (message.type === "message") {
+      displayMessage(message);
+    }
   }
   
   reader.readAsText(messageIn);
 };
 
 function displayMessage(message) {
-  message = JSON.parse(message);
   
   let messageDiv = document.createElement('div');
   messageDiv.classList.add('incoming');
