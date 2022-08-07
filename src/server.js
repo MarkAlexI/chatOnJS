@@ -32,7 +32,7 @@ function onSocketConnect(ws) {
     if (incomingMessage.type === "login") {
       let outMessage = Buffer.from(JSON.stringify({
          type: "login",
-         text: "yes",
+         text: incomingMessage.id,
          id: "server",
          date: Date.now(),
       }));

@@ -16,14 +16,16 @@ function autorize() {
     document.getElementById('login').placeholder = 'Wrong symbols. Try again.';
     return;
   }
-  
+
   ws.send(JSON.stringify({
     type: "login",
     id: login,
     text: "",
     date: Date.now(),
   }));
-  
+}
+
+function setId(login) {
   id = login;
   document.getElementsByClassName('autorize')[0].style.display = 'none';
   document.getElementsByClassName('typing')[0].style.display = 'block';
@@ -56,6 +58,7 @@ ws.onmessage = function(event) {
     
     if (message.type === "login") {
       console.log(message.text);
+      setId(message.text);
     }
     if (message.type === "message") {
       displayMessage(message);
