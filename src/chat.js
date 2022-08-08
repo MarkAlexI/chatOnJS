@@ -20,7 +20,7 @@ function autorize() {
   ws.send(JSON.stringify({
     type: "login",
     id: login,
-    text: "",
+    text: "I wanna chat",
     date: Date.now(),
   }));
 }
@@ -59,6 +59,10 @@ ws.onmessage = function(event) {
     if (message.type === "login") {
       console.log(message.text);
       setId(message.text);
+      displayMessage(message);
+    }
+    if (message.type === "reject") {
+      console.log(message.text);
     }
     if (message.type === "message") {
       displayMessage(message);
@@ -72,7 +76,10 @@ function displayMessage(message) {
   
   let messageDiv = document.createElement('div');
   messageDiv.classList.add('incoming');
-  messageDiv.textContent = message.text;
+  messageDiv.textContent =
+    message.type === "message"
+    ? message.text
+    : `User ${message.text} join to chat.`;
   document.getElementById('chat').prepend(messageDiv);
   
   let userId = document.createElement('div');

@@ -6,6 +6,7 @@ const ws = new require('ws');
 const wsServer = new ws.Server({ noServer: true });
 
 const visitors = new Set();
+const logins = new Set();
 
 http.createServer((req, res) => {
   console.log(req.url);
@@ -30,12 +31,23 @@ function onSocketConnect(ws) {
   ws.on('message', function(message) {
     let incomingMessage = JSON.parse(message);
     if (incomingMessage.type === "login") {
-      let outMessage = Buffer.from(JSON.stringify({
+      let outMessage = Buffer.from(JSON.stringify(
+        logins.has(incomingMessage.id) ?
+        {
+          type: "reject",
+          text: "@",
+          id: "server",
+          date: Date.now(),
+        } :
+        (
+          logins.add(incomingMessage.id),
+        {
          type: "login",
          text: incomingMessage.id,
          id: "server",
          date: Date.now(),
-      }));
+        })
+      ));
       ws.send(outMessage);
     }
     if (incomingMessage.type === "message") {
