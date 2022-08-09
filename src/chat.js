@@ -12,8 +12,7 @@ function autorize() {
   let login = document.getElementById('login').value;
 
   if (!login.length || /\W/.test(login)) {
-    document.getElementById('login').value = '';
-    document.getElementById('login').placeholder = 'Wrong symbols. Try again.';
+    loginReject('Wrong symbols. Try again.');
     return;
   }
 
@@ -63,7 +62,6 @@ ws.onmessage = function(event) {
     let message = JSON.parse(reader.result);
     
     if (message.type === "login") {
-      console.log(message.text);
       setId(message.text);
       displayMessage(message);
     }
