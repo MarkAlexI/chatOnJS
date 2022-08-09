@@ -38,6 +38,12 @@ ws.onclose = event => {
   document.body.textContent = 'Server died...';
 };
 
+function loginReject(text) {
+  document.getElementById('login').value = '';
+  document.getElementById('login').placeholder = text;
+  return;
+}
+
 document.forms.sendmessage.onsubmit = function() {
     let messageOut = {
       type: "message",
@@ -62,7 +68,7 @@ ws.onmessage = function(event) {
       displayMessage(message);
     }
     if (message.type === "reject") {
-      console.log(message.text);
+      loginReject(message.text);
     }
     if (message.type === "message") {
       displayMessage(message);

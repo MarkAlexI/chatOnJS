@@ -35,7 +35,7 @@ function onSocketConnect(ws) {
         logins.has(incomingMessage.id) ?
         {
           type: "reject",
-          text: "@",
+          text: "Username already exists! Please choose a different username.",
           id: "server",
           date: Date.now(),
         } :
