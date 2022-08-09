@@ -28,6 +28,12 @@ http.createServer((req, res) => {
 function onSocketConnect(ws) {
   visitors.add(ws);
 
+  function sendAll(message) {
+    for (let visitor of visitors) {
+      visitor.send(message);
+    }
+  }
+
   ws.on('message', function(message) {
     let incomingMessage = JSON.parse(message);
     if (incomingMessage.type === "login") {
@@ -51,9 +57,7 @@ function onSocketConnect(ws) {
       ws.send(outMessage);
     }
     if (incomingMessage.type === "message") {
-      for (let visitor of visitors) {
-        visitor.send(message);
-      }
+      sendAll(message);
     }
   });
 
