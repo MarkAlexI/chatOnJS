@@ -8,6 +8,10 @@ const wsServer = new ws.Server({ noServer: true });
 const visitors = new Set();
 const logins = new Set();
 
+process.on('uncaughtException', err => {
+  console.log('on uncaughtException: ' + err.message);
+});
+
 http.createServer((req, res) => {
   console.log(req.url);
   if (req.url == '/ws' && req.headers.upgrade &&
