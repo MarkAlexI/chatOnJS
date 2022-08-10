@@ -12,22 +12,24 @@ process.on('uncaughtException', err => {
   console.log('on uncaughtException: ' + err.message);
 });
 
-http.createServer((req, res) => {
+http.createServer(access).listen(8080);
+
+function access(req, res) {
   console.log(req.url);
   if (req.url == '/ws' && req.headers.upgrade &&
     req.headers.upgrade.toLowerCase() == 'websocket' && req.headers.connection.match(/\bupgrade\b/i)) {
     wsServer.handleUpgrade(req, req.socket, Buffer.alloc(0), onSocketConnect);
-    } else if (req.url == '/') {
-      fs.createReadStream('./src/index.html').pipe(res);
-    } else if (req.url == '/style.css') {
-      fs.createReadStream('./src/style.css').pipe(res);
-    } else if (req.url == '/chat.js') {
-      fs.createReadStream('./src/chat.js').pipe(res);
-    } else {
-      res.statusCode = 404;
-      res.end('No path to follow');
-    }
-}).listen(8080);
+  } else if (req.url == '/') {
+    fs.createReadStream('./src/index.html').pipe(res);
+  } else if (req.url == '/style.css') {
+    fs.createReadStream('./src/style.css').pipe(res);
+  } else if (req.url == '/chat.js') {
+    fs.createReadStream('./src/chat.js').pipe(res);
+  } else {
+    res.statusCode = 404;
+    res.end('No path to follow');
+  }
+}
 
 function onSocketConnect(ws) {
   visitors.add(ws);
