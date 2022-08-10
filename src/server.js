@@ -34,12 +34,16 @@ function access(req, res) {
 function onSocketConnect(ws) {
   visitors.add(ws);
 
-  function sendAll(message) {
+  function sendToEveryone(message) {
     for (let visitor of visitors) {
       visitor.send(message);
     }
   }
 
+  function sendPrivate(message) {
+    ws.send(message);
+  }
+  
   ws.on('message', function(message) {
     let incomingMessage = JSON.parse(message);
     if (incomingMessage.type === "login") {
@@ -60,10 +64,10 @@ function onSocketConnect(ws) {
          date: Date.now(),
         })
       ));
-      ws.send(outMessage);
+      sendPrivate(outMessage);
     }
     if (incomingMessage.type === "message") {
-      sendAll(message);
+      sendToEveryone(message);
     }
   });
 
