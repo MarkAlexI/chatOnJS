@@ -1,4 +1,29 @@
 {
+  "name": "chatonjs",
+  "description": "Simple public chat based on WebSockets with server.",
+  "version": "1.0.0",
+  "main": "chat.js",
+  "scripts": {
+    "test": "",
+    "install-dep": "npm i --no-bin-links",
+    "start": "node src/server.js --no-bin-links"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarkAlexI/chatOnJS.git"
+  },
+  "keywords": [
+    "\"Chat",
+    "ws",
+    "js\""
+  ],
+  "author": "MarkAlexI",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MarkAlexI/chatOnJS/issues"
+  },
+  "homepage": "https://github.com/MarkAlexI/chatOnJS#readme",
+  "devDependencies": {},
   "dependencies": {
     "ws": "^8.8.1"
   }
