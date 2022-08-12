@@ -14,7 +14,11 @@ body {
 }
 
 input[type="text"] {
-  width: clamp(300px, 80%, 1200px);
+  width: clamp(300px, 80%, 500px);
+}
+
+input[type="password"] {
+  width: clamp(246px, 65%, 400px);
 }
 
 #chat {
