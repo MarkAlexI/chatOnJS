@@ -11,15 +11,22 @@ if (ws.readyState === 0) {
 function autorize() {
   let login = document.getElementById('login').value;
 
+ let password = document.getElementById('password');
+
   if (!login.length || /\W/.test(login)) {
     loginReject('Wrong symbols. Try again.');
     return;
   }
 
+ if (!password.length || /\W/.test(password)) {
+   loginReject('Uncorrect password.');
+   return;
+ }
+
   ws.send(JSON.stringify({
     type: "login",
     id: login,
-    text: "I wanna chat",
+    text: password,
     date: Date.now(),
   }));
 }
