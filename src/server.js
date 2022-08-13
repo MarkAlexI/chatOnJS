@@ -47,8 +47,9 @@ function onSocketConnect(ws) {
   ws.on('message', function(message) {
     let incomingMessage = JSON.parse(message);
     if (incomingMessage.type === "login") {
+      let register = incomingMessage.id + ':' + incomingMessage.text;
       let outMessage = Buffer.from(JSON.stringify(
-        logins.has(incomingMessage.id) ?
+        logins.has(register) ?
         {
           type: "reject",
           text: "Username already exists! Please choose a different username.",
@@ -56,10 +57,10 @@ function onSocketConnect(ws) {
           date: Date.now(),
         } :
         (
-          logins.add(incomingMessage.id),
+          logins.add(register),
         {
          type: "login",
-         text: incomingMessage.id,
+         text: register,
          id: "server",
          date: Date.now(),
         })

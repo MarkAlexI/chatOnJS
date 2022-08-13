@@ -1,7 +1,7 @@
 {
   "name": "chatonjs",
   "description": "Simple public chat based on WebSockets with server.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "chat.js",
   "scripts": {
     "test": "",

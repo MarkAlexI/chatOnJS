@@ -11,7 +11,7 @@ if (ws.readyState === 0) {
 function autorize() {
   let login = document.getElementById('login').value;
 
- let password = document.getElementById('password');
+ let password = document.getElementById('password').value;
 
   if (!login.length || /\W/.test(login)) {
     loginReject('Wrong symbols. Try again.');
@@ -69,7 +69,7 @@ ws.onmessage = function(event) {
     let message = JSON.parse(reader.result);
     
     if (message.type === "login") {
-      setId(message.text);
+      setId(message.text.split`:`[0]);
       displayMessage(message);
     }
     if (message.type === "reject") {
