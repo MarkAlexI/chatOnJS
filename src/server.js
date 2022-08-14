@@ -6,6 +6,8 @@ const wsServer = new ws.Server({ noServer: true });
 const visitors = new Set();
 const logins = new Set();
 
+initUsers();
+
 process.on('uncaughtException', err => {
   console.log('on uncaughtException: ' + err.message);
 });
@@ -73,4 +75,15 @@ function onSocketConnect(ws) {
   ws.on('close', function() {
     visitors.delete(ws);
   });
+}
+
+function initUsers() {
+  console.log('init');
+  const pathToDB = 'usersDB.txt';
+
+  if (!fs.existsSync(pathToDB)) {
+    fs.writeFileSync(pathToDB, 'qaz', 'utf8');
+  }
+  
+  console.log(fs.readFileSync(pathToDB, 'utf8'));
 }
