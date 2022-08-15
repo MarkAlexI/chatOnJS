@@ -44,7 +44,7 @@ function onSocketConnect(ws) {
     ws.send(message);
   }
   
-  ws.on('message', function(message) {
+  function messagingStrategies(message) {
     let incomingMessage = JSON.parse(message);
     if (incomingMessage.type === "login") {
       let register = incomingMessage.id + ':' + incomingMessage.text;
@@ -70,8 +70,12 @@ function onSocketConnect(ws) {
     if (incomingMessage.type === "message") {
       sendToEveryone(message);
     }
+  }
+  
+  ws.on('message', function (message) {
+    messagingStrategies(message);
   });
-
+  
   ws.on('close', function() {
     visitors.delete(ws);
   });
