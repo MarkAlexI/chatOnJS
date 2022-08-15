@@ -4,7 +4,7 @@ const ws = new require('ws');
 const wsServer = new ws.Server({ noServer: true });
 
 const visitors = new Set();
-const logins = new Set();
+let logins, activeUsers;
 
 initUsers();
 
@@ -89,5 +89,9 @@ function initUsers() {
     fs.writeFileSync(pathToDB, 'qaz', 'utf8');
   }
   
-  console.log(fs.readFileSync(pathToDB, 'utf8'));
+  let readFromDB = fs.readFileSync(pathToDB, 'utf8');
+  
+  logins = new Set(readFromDB.length === 0
+                   ? void 0
+                   : readFromDB.split`\n`);
 }
