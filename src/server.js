@@ -3,8 +3,9 @@ const fs = require('fs');
 const ws = new require('ws');
 const wsServer = new ws.Server({ noServer: true });
 
+const pathToDB = 'usersDB.txt';
 const visitors = new Set();
-let logins, activeUsers;
+let logins, activeUsers = new Map();
 
 initUsers();
 
@@ -47,24 +48,49 @@ function onSocketConnect(ws) {
   function messagingStrategies(message) {
     let incomingMessage = JSON.parse(message);
     if (incomingMessage.type === "login") {
-      let register = incomingMessage.id + ':' + incomingMessage.text;
-      let outMessage = Buffer.from(JSON.stringify(
-        logins.has(register) ?
-        {
-          type: "reject",
-          text: "Username already exists! Please choose a different username.",
-          id: "server",
-          date: Date.now(),
-        } :
-        (
-          logins.add(register),
-        {
-         type: "login",
-         text: register,
-         id: "server",
-         date: Date.now(),
-        })
-      ));
+      let id = incomingMessage.id;
+      let password = incomingMessage.text;
+      
+      function prepareMessage() {
+        let result;
+        
+        if ((logins.has(id) && logins.get(id) !== password) || activeUsers.has(id)) {
+          result = {
+            type: "reject",
+            text: "Username already online! Please choose a different username.",
+            id: "server",
+            date: Date.now(),
+          };
+        }
+        
+        if (!activeUsers.has(id)) {
+          ws.id = id;
+          activeUsers.set(id, password);
+          
+          result = {
+              type: "login",
+              text: id,
+              id: "server",
+              date: Date.now(),
+            };
+        }
+        
+        if (!logins.has(id)) {
+          fs.appendFile(
+            pathToDB,
+            (logins.size === 0 ? '' : '\n') + id + ':' + password,
+            function(error) {
+              if (error) throw error;
+            });
+          
+          logins.set(id, password);
+        }
+        
+        return JSON.stringify(result);
+      }
+      
+      let outMessage = Buffer.from(prepareMessage());
+
       sendPrivate(outMessage);
     }
     if (incomingMessage.type === "message") {
@@ -77,21 +103,21 @@ function onSocketConnect(ws) {
   });
   
   ws.on('close', function() {
+    activeUsers.delete(ws.id);
     visitors.delete(ws);
   });
 }
 
 function initUsers() {
   console.log('init');
-  const pathToDB = 'usersDB.txt';
 
   if (!fs.existsSync(pathToDB)) {
-    fs.writeFileSync(pathToDB, 'qaz', 'utf8');
+    fs.writeFileSync(pathToDB, '', 'utf8');
   }
   
   let readFromDB = fs.readFileSync(pathToDB, 'utf8');
   
-  logins = new Set(readFromDB.length === 0
+  logins = new Map(readFromDB.length === 0
                    ? void 0
-                   : readFromDB.split`\n`);
+                   : readFromDB.split`\n`.map(el => el.split`:`));
 }
