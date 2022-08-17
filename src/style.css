@@ -49,3 +49,23 @@ input[type="password"] {
   font-size: .9rem;
   color: red;
 }
+
+@media (min-width: 600px) {
+  body {
+    font-size: 28px;
+  }
+  
+  .wrapper {
+    max-width: 640px;
+    margin: 10px auto;
+  }
+  
+  input {
+    font-size: 24px;
+  }
+  
+  .incoming {
+    margin: 8px;
+    padding: 0 5px;
+  }
+}
