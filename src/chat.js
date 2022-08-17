@@ -62,7 +62,10 @@ document.forms.sendmessage.onsubmit = function() {
   };
 
 ws.onmessage = function(event) {
-  let messageIn = event.data;
+  messageProcessing(event.data);
+};
+
+function messageProcessing(messageIn) {
   let reader = new FileReader();
   
   reader.onload = function() {
@@ -81,7 +84,7 @@ ws.onmessage = function(event) {
   }
   
   reader.readAsText(messageIn);
-};
+}
 
 function displayMessage(message) {
   
