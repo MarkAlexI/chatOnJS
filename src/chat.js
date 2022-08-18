@@ -14,12 +14,12 @@ function autorize() {
  let password = document.getElementById('password').value;
 
   if (!login.length || /\W/.test(login)) {
-    loginReject('Wrong symbols. Try again.');
+    loginReject('Wrong symbols. Try again.', 'login');
     return;
   }
 
  if (!password.length || /\W/.test(password)) {
-   loginReject('Uncorrect password.');
+   loginReject('Uncorrect password.', 'password');
    return;
  }
 
@@ -44,9 +44,9 @@ ws.onclose = event => {
   document.body.textContent = 'Server died...';
 };
 
-function loginReject(text) {
-  document.getElementById('login').value = '';
-  document.getElementById('login').placeholder = text;
+function loginReject(text, field) {
+  document.getElementById(field).value = '';
+  document.getElementById(field).placeholder = text;
   return;
 }
 
