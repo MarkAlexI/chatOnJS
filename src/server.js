@@ -55,27 +55,17 @@ function onSocketConnect(ws) {
         let result;
         
         if ((logins.has(id) && logins.get(id) !== password) || activeUsers.has(id)) {
-          result = {
-            type: "reject",
-            text: "Username already online! Please choose a different username.",
-            id: "server",
-            date: Date.now(),
-          };
+          result = makeMessage("reject", "Username already online! Please choose a different username.");
         }
         
         if (!activeUsers.has(id)) {
           ws.id = id;
           activeUsers.set(id, password);
           
-          result = {
-              type: "login",
-              text: id,
-              id: "server",
-              date: Date.now(),
-            };
+          result = makeMessage("login", id);
         }
-        
-        if (!logins.has(id)) {
+
+        if (!logins.has(id)) {console.log('save' + id + ':' + password);
           fs.appendFile(
             pathToDB,
             (logins.size === 0 ? '' : '\n') + id + ':' + password,
@@ -120,4 +110,13 @@ function initUsers() {
   logins = new Map(readFromDB.length === 0
                    ? void 0
                    : readFromDB.split`\n`.map(el => el.split`:`));
+}
+
+function makeMessage(type, text) {
+  return {
+    type: type,
+    text: text,
+    id: "server",
+    date: Date.now(),
+  };
 }

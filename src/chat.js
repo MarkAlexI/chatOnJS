@@ -44,7 +44,7 @@ ws.onclose = event => {
   document.body.textContent = 'Server died...';
 };
 
-function loginReject(text, field) {
+function loginReject(text, field = 'login') {
   document.getElementById(field).value = '';
   document.getElementById(field).placeholder = text;
   return;
@@ -70,7 +70,7 @@ function messageProcessing(messageIn) {
   
   reader.onload = function() {
     let message = JSON.parse(reader.result);
-    
+
     if (message.type === "login") {
       setId(message.text.split`:`[0]);
       displayMessage(message);
