@@ -6,7 +6,9 @@
   "scripts": {
     "test": "",
     "install-dep": "npm i --no-bin-links",
-    "start": "node src/server.js --no-bin-links"
+    "start": "node src/server.js --no-bin-links",
+    "build": "webpack",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
