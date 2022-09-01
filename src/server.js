@@ -65,7 +65,7 @@ function onSocketConnect(ws) {
           result = makeMessage("login", id);
         }
 
-        if (!logins.has(id)) {console.log('save' + id + ':' + password);
+        if (!logins.has(id)) {
           fs.appendFile(
             pathToDB,
             (logins.size === 0 ? '' : '\n') + id + ':' + password,

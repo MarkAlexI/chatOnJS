@@ -5,10 +5,6 @@ let url = 'ws://localhost:8080/ws';
 let ws = new WebSocket(url);
 let id = '';
 
-if (ws.readyState === 0) {
-  console.log('connecting');
-}
-
 function autorize() {
   let login = document.getElementById('login').value;
 
@@ -26,8 +22,8 @@ function autorize() {
 
   ws.send(JSON.stringify({
     type: "login",
-    id: login,
     text: password,
+    id: login,
     date: Date.now(),
   }));
 }
