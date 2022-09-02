@@ -1,5 +1,5 @@
 'use strict';
-import './style.css';
+//import './style.css';
 
 let url = 'ws://localhost:8080/ws';
 let ws = new WebSocket(url);

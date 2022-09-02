@@ -3,6 +3,9 @@ const fs = require('fs');
 const ws = new require('ws');
 const wsServer = new ws.Server({ noServer: true });
 
+const makeMessage = require('./message.js');
+const serverMessage = (type, text) => makeMessage(type, text, "server");
+
 const pathToDB = 'usersDB.txt';
 const visitors = new Set();
 let logins, activeUsers = new Map();
@@ -55,14 +58,14 @@ function onSocketConnect(ws) {
         let result;
         
         if ((logins.has(id) && logins.get(id) !== password) || activeUsers.has(id)) {
-          result = makeMessage("reject", "Username already online! Please choose a different username.");
+          result = serverMessage("reject", "Username already online! Please choose a different username.");
         }
         
         if (!activeUsers.has(id)) {
           ws.id = id;
           activeUsers.set(id, password);
           
-          result = makeMessage("login", id);
+          result = serverMessage("login", id);
         }
 
         if (!logins.has(id)) {
@@ -70,7 +73,6 @@ function onSocketConnect(ws) {
             pathToDB,
             (logins.size === 0 ? '' : '\n') + id + ':' + password,
             function(error) {
-              if (error) throw error;
             });
           
           logins.set(id, password);
@@ -110,13 +112,4 @@ function initUsers() {
   logins = new Map(readFromDB.length === 0
                    ? void 0
                    : readFromDB.split`\n`.map(el => el.split`:`));
-}
-
-function makeMessage(type, text) {
-  return {
-    type: type,
-    text: text,
-    id: "server",
-    date: Date.now(),
-  };
 }
