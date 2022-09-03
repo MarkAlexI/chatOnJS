@@ -1,5 +1,6 @@
 'use strict';
 import './style.css';
+const makeMessage = require('./message.js');
 
 let url = 'ws://localhost:8080/ws';
 let ws = new WebSocket(url);
@@ -22,12 +23,7 @@ function autorize() {
    return;
  }
 
-  ws.send(JSON.stringify({
-    type: "login",
-    text: password,
-    id: login,
-    date: Date.now(),
-  }));
+  ws.send(JSON.stringify(makeMessage('login', password, login)));
 }
 
 function setId(login) {
@@ -50,13 +46,7 @@ function loginReject(text, field = 'login') {
 }
 
 document.forms.sendmessage.onsubmit = function() {
-    let messageOut = {
-      type: "message",
-      text: this.message.value,
-      id: id,
-      date: Date.now(),
-    };
-    ws.send(JSON.stringify(messageOut));
+    ws.send(JSON.stringify(makeMessage('message', this.message.value, id)));
     return false;
   };
 
